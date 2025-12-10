@@ -15,9 +15,3 @@ https://pradeep-0110.github.io/todo-app/
 - Drag and drop reordering  
 - Saves everything in localStorage  
 - Import and export tasks as JSON  
-
-# How to Run
-No setup required.  
-Just open **index.html** in your browser.
-
-## File Structure
