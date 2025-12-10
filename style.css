@@ -1,0 +1,183 @@
+:root {
+  --bg: #f7fafc;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --accent: #4f46e5;
+  --danger: #ef4444;
+  --radius: 12px;
+  font-family: Inter, system-ui;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+  padding: 28px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 920px;
+}
+
+.card {
+  padding: 20px;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, .08);
+}
+
+.visually-hidden {
+  position: absolute;
+  left: -9999px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.lead {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.add {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.new {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #e6e9ef;
+}
+
+.primary {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+}
+
+.ghost {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #e6e9ef;
+  cursor: pointer;
+  background: transparent;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filters {
+  display: flex;
+  gap: 6px;
+}
+
+.filters button {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+}
+
+.filters .active {
+  background: var(--accent);
+  color: white;
+}
+
+.right-controls {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  margin-bottom: 6px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: #fff;
+  transition: box-shadow .2s ease, transform .15s ease;
+}
+
+.item:hover {
+  box-shadow: 0 6px 16px rgba(15, 23, 42, .08);
+}
+
+.item.dragging {
+  opacity: 0.4;
+  transform: scale(.98);
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  cursor: pointer;
+}
+
+.text {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.text.done .label {
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.btn {
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid #e6e9ef;
+  background: transparent;
+  cursor: pointer;
+}
+
+.btn.danger {
+  color: var(--danger);
+  border-color: rgba(239, 68, 68, .2)
+}
+
+.editor {
+  flex: 1;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+}

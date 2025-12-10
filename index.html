@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card" role="application" aria-label="To-Do App">
+      <header>
+        <h1>To-Do App</h1>
+        <p class="lead">HTML • CSS • JS</p>
+      </header>
+
+      <form id="addForm" class="add" aria-label="Add task">
+        <label for="newTask" class="visually-hidden">New task</label>
+        <input id="newTask" class="new" type="text" placeholder="Add a task..." />
+        <button class="primary" type="submit">Add</button>
+        <button id="clearAll" class="ghost" type="button">Clear All</button>
+      </form>
+
+      <div class="controls">
+        <div class="filters">
+          <button data-filter="all" class="active">All</button>
+          <button data-filter="active">Active</button>
+          <button data-filter="completed">Completed</button>
+        </div>
+
+        <div class="right-controls">
+          <label for="sortSelect" class="muted small">Sort</label>
+          <select id="sortSelect">
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+          </select>
+
+          <input id="search" placeholder="Search">
+
+          <button id="exportBtn" class="btn small">Export</button>
+          <input id="importFile" type="file" accept="application/json" hidden>
+          <button id="importBtn" class="btn small">Import</button>
+        </div>
+      </div>
+
+      <ul id="list" class="list" aria-live="polite"></ul>
+
+      <footer>
+        <div id="itemsLeft" class="muted">0 items left</div>
+
+        <div class="footer-btns">
+          <button id="clearCompleted" class="btn small">Clear completed</button>
+          <button id="backupBtn" class="btn small">Copy JSON</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
