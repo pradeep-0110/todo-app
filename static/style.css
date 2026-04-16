@@ -220,15 +220,22 @@ button {
 
 /* Clear completed button */
 #clearCompleted {
-  margin-top: 15px;
-  width: 100%;
-  background: var(--warning);
-  color: white;
-  padding: 10px;
+  display: block;
+  margin: 12px auto 0;
+  background: transparent;
+  color: var(--warning);
+  border: 1px solid var(--warning);
+  padding: 6px 16px;
+  width: auto;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s, color 0.2s;
 }
 
 #clearCompleted:hover {
-  background: #d97706;
+  background: var(--warning);
+  color: white;
 }
 
 /* Empty state */
@@ -236,4 +243,50 @@ button {
   text-align: center;
   color: var(--muted);
   margin-top: 20px;
+}
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Tooltip text */
+.tooltip-text {
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+
+  background: #111827;
+  color: #f1f5f9;
+  font-size: 12px;
+  padding: 6px 8px;
+  border-radius: 6px;
+
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+
+  transition: all 0.2s ease;
+}
+
+/* Arrow */
+.tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  border-width: 5px;
+  border-style: solid;
+  border-color: #111827 transparent transparent transparent;
+}
+
+/* Show on hover */
+.tooltip:hover .tooltip-text {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
 }

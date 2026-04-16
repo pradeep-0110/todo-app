@@ -69,12 +69,24 @@ function render() {
         ${task.text}
       </span>
 
-      <button class="star-btn ${task.starred ? "active" : ""}">
-        ★
-      </button>
+      <div class="tooltip">
+        <button class="star-btn ${task.starred ? "active" : ""}">
+          ★
+        </button>
+        <span class="tooltip-text">
+          ${task.starred ? "Remove from Important" : "Mark as Important"}
+        </span>
+      </div>
 
-      <button class="icon-btn edit-btn">✏️</button>
-      <button class="icon-btn delete-btn">🗑️</button>
+      <div class="tooltip">
+        <button class="icon-btn edit-btn">✏️</button>
+        <span class="tooltip-text">Edit task</span>
+      </div>
+
+      <div class="tooltip">
+        <button class="icon-btn delete-btn">🗑️</button>
+        <span class="tooltip-text">Delete task</span>
+      </div>
     `;
 
     // checkbox
