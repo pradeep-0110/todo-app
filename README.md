@@ -1,49 +1,32 @@
 # 📝 Todo App
 
-A simple full-stack Todo application built using **Flask, SQLite, HTML, CSS, and JavaScript**.
+A full-stack task management app built with Flask, SQLite, and vanilla JavaScript.
 
-## 🚀 Features
+🔗 **Live Demo:** [todo-app-oius.onrender.com](https://todo-app-oius.onrender.com)
 
-* Add, edit, and delete tasks
-* Mark tasks as completed
-* Filter (All / Active / Completed)
-* Clear completed tasks
-* Persistent storage using SQLite
-* Clean dark UI
+## Features
 
-## 🛠 Tech Stack
+- Add, edit, and delete tasks
+- Mark tasks complete and clear them in bulk
+- Star important tasks — starred tasks sort to the top
+- Filter by All / Active / Completed with live counts
+- Clean, responsive UI
 
-* Backend: Flask (Python)
-* Database: SQLite
-* Frontend: HTML, CSS, JavaScript
+## Tech Stack
 
-## ▶️ Run Locally
+| Layer    | Technology              |
+|----------|-------------------------|
+| Backend  | Python (Flask)          |
+| Database | SQLite                  |
+| Frontend | HTML, CSS, JavaScript   |
 
-1. Clone the repository:
+## Getting Started
 
-   ```
-   git clone https://github.com/pradeep-0110/todo-app.git
-   cd todo-app
-   ```
+```bash
+git clone https://github.com/pradeep-0110/todo-app.git
+cd todo-app
+pip install -r requirements.txt
+python app.py
+```
 
-2. Install dependencies:
-
-   ```
-   pip install -r requirements.txt
-   ```
-
-3. Run the app:
-
-   ```
-   python app.py
-   ```
-
-4. Open in browser:
-
-   ```
-   http://127.0.0.1:5000
-   ```
-
-## 🌐 Live Demo
-
-https://todo-app-oius.onrender.com
+Open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
