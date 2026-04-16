@@ -19,6 +19,7 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             text TEXT NOT NULL,
             completed INTEGER DEFAULT 0,
+            starred INTEGER DEFAULT 0,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """
@@ -35,16 +36,14 @@ def index():
     return render_template("index.html")
 
 
-# Get all todos
 @app.route("/api/todos", methods=["GET"])
 def get_todos():
     conn = get_db()
-    todos = conn.execute("SELECT * FROM todos ORDER BY created_at DESC").fetchall()
+    todos = conn.execute("SELECT * FROM todos").fetchall()
     conn.close()
     return jsonify([dict(row) for row in todos])
 
 
-# Add todo
 @app.route("/api/todos", methods=["POST"])
 def add_todo():
     data = request.json
@@ -54,7 +53,10 @@ def add_todo():
         return jsonify({"error": "Text required"}), 400
 
     conn = get_db()
-    cur = conn.execute("INSERT INTO todos (text) VALUES (?)", (text,))
+    cur = conn.execute(
+        "INSERT INTO todos (text, starred) VALUES (?, ?)",
+        (text, 0),
+    )
     conn.commit()
 
     new_id = cur.lastrowid
@@ -64,19 +66,26 @@ def add_todo():
     return jsonify(dict(todo)), 201
 
 
-# Update todo
 @app.route("/api/todos/<int:id>", methods=["PUT"])
 def update_todo(id):
     data = request.json
 
     conn = get_db()
+
+    # Get existing values (IMPORTANT FIX)
+    existing = conn.execute("SELECT * FROM todos WHERE id = ?", (id,)).fetchone()
+
+    text = data.get("text", existing["text"])
+    completed = data.get("completed", existing["completed"])
+    starred = data.get("starred", existing["starred"])
+
     conn.execute(
         """
         UPDATE todos
-        SET text = ?, completed = ?
+        SET text = ?, completed = ?, starred = ?
         WHERE id = ?
     """,
-        (data.get("text"), data.get("completed"), id),
+        (text, completed, starred, id),
     )
     conn.commit()
     conn.close()
@@ -84,25 +93,21 @@ def update_todo(id):
     return jsonify({"success": True})
 
 
-# Delete todo
 @app.route("/api/todos/<int:id>", methods=["DELETE"])
 def delete_todo(id):
     conn = get_db()
     conn.execute("DELETE FROM todos WHERE id = ?", (id,))
     conn.commit()
     conn.close()
-
     return jsonify({"success": True})
 
 
-# Clear completed
 @app.route("/api/todos/clear_completed", methods=["DELETE"])
 def clear_completed():
     conn = get_db()
     conn.execute("DELETE FROM todos WHERE completed = 1")
     conn.commit()
     conn.close()
-
     return jsonify({"success": True})
 
 

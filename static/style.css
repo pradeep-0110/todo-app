@@ -5,7 +5,8 @@
   --muted: #94a3b8;
   --accent: #6366f1;
   --danger: #ef4444;
-  --warning: #f59f0be2;
+  --warning: #f59e0b;
+  --success: #22c55e;
   --radius: 12px;
   font-family: Inter, system-ui;
 }
@@ -40,15 +41,15 @@ body {
 
 /* Title */
 h1 {
-  margin: 0;
-  margin-bottom: 16px;
+  margin: 0 0 16px;
   font-size: 24px;
   text-align: center;
 }
 
 p {
   text-align: center;
-  font-weight: 600;
+  font-size: 18px;
+  font-family: serif;
 }
 
 /* Add form */
@@ -84,7 +85,7 @@ button {
   transition: 0.2s;
 }
 
-/* Primary */
+/* Primary button */
 .primary {
   background: var(--accent);
   color: white;
@@ -94,11 +95,15 @@ button {
   background: #4f46e5;
 }
 
-/* Filters */
+/* Controls (filters + counts) */
 .controls {
   margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+/* Filters */
 .filters {
   display: flex;
   gap: 8px;
@@ -107,12 +112,17 @@ button {
 .filters button {
   background: transparent;
   color: var(--muted);
-  border: 1px solid transparent;
 }
 
 .filters .active {
   background: var(--accent);
   color: white;
+}
+
+/* Counts */
+.counts {
+  font-size: 14px;
+  color: var(--muted);
 }
 
 /* List */
@@ -139,12 +149,32 @@ button {
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Checkbox */
+/* Checkbox (custom) */
 .item input[type="checkbox"] {
-  transform: scale(1.2);
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--muted);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
 }
 
-/* Text */
+.item input[type="checkbox"]:checked {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.item input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  top: -2px;
+  left: 3px;
+  color: white;
+  font-size: 14px;
+}
+
+/* Task text */
 .task-text {
   flex: 1;
 }
@@ -154,23 +184,29 @@ button {
   color: var(--muted);
 }
 
-/* Buttons inside item */
-.edit-btn {
-  background: #3b82f6;
-  color: white;
+/* Star button */
+.star-btn {
+  background: transparent;
+  font-size: 20px;
+  color: var(--muted);
 }
 
-.edit-btn:hover {
-  background: #2563eb;
+.star-btn.active {
+  color: gold;
 }
 
-.delete-btn {
-  background: var(--danger);
-  color: white;
+.star-btn:hover {
+  transform: scale(1.2);
 }
 
-.delete-btn:hover {
-  background: #dc2626;
+/* Icon buttons (edit/delete) */
+.icon-btn {
+  background: transparent;
+  font-size: 18px;
+}
+
+.icon-btn:hover {
+  transform: scale(1.2);
 }
 
 /* Edit input */
@@ -182,7 +218,7 @@ button {
   outline: none;
 }
 
-/* Clear button */
+/* Clear completed button */
 #clearCompleted {
   margin-top: 15px;
   width: 100%;

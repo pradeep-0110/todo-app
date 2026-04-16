@@ -3,22 +3,19 @@ const newTask = document.getElementById("newTask");
 const listEl = document.getElementById("list");
 const filters = document.querySelectorAll(".filters button");
 const clearCompletedBtn = document.getElementById("clearCompleted");
+const countsEl = document.getElementById("counts");
 
 let tasks = [];
 let currentFilter = "all";
 
-// --------------------
-// Load Tasks
-// --------------------
+// Load
 async function loadTasks() {
   const res = await fetch("/api/todos");
   tasks = await res.json();
   render();
 }
 
-// --------------------
-// Add Task
-// --------------------
+// Add
 addForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -35,9 +32,7 @@ addForm.addEventListener("submit", async (e) => {
   loadTasks();
 });
 
-// --------------------
 // Filters
-// --------------------
 filters.forEach(btn => {
   btn.addEventListener("click", () => {
     filters.forEach(b => b.classList.remove("active"));
@@ -47,13 +42,17 @@ filters.forEach(btn => {
   });
 });
 
-// --------------------
 // Render
-// --------------------
 function render() {
   listEl.innerHTML = "";
 
-  let filtered = tasks.filter(task => {
+  let sorted = [...tasks].sort((a, b) => {
+    if (b.starred !== a.starred) return b.starred - a.starred;
+    if (a.completed !== b.completed) return a.completed - b.completed;
+    return a.text.localeCompare(b.text);
+  });
+
+  let filtered = sorted.filter(task => {
     if (currentFilter === "active") return task.completed === 0;
     if (currentFilter === "completed") return task.completed === 1;
     return true;
@@ -70,46 +69,65 @@ function render() {
         ${task.text}
       </span>
 
-      <button class="edit-btn">Edit</button>
-      <button class="delete-btn">Delete</button>
+      <button class="star-btn ${task.starred ? "active" : ""}">
+        ★
+      </button>
+
+      <button class="icon-btn edit-btn">✏️</button>
+      <button class="icon-btn delete-btn">🗑️</button>
     `;
 
-    // Toggle
+    // checkbox
     li.querySelector("input").addEventListener("change", async () => {
       await fetch(`/api/todos/${task.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          text: task.text,
           completed: task.completed ? 0 : 1
         })
       });
       loadTasks();
     });
 
-    // Delete
-    li.querySelector(".delete-btn").addEventListener("click", async () => {
+    // star
+    li.querySelector(".star-btn").addEventListener("click", async () => {
       await fetch(`/api/todos/${task.id}`, {
-        method: "DELETE"
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          starred: task.starred ? 0 : 1
+        })
       });
       loadTasks();
     });
 
-    // Edit
+    // delete
+    li.querySelector(".delete-btn").addEventListener("click", async () => {
+      await fetch(`/api/todos/${task.id}`, { method: "DELETE" });
+      loadTasks();
+    });
+
+    // edit
     li.querySelector(".edit-btn").addEventListener("click", () => {
       startEdit(li, task);
     });
 
     listEl.appendChild(li);
   });
+
+  // counts
+  const total = tasks.length;
+  const active = tasks.filter(t => t.completed === 0).length;
+  const completed = tasks.filter(t => t.completed === 1).length;
+
+  countsEl.textContent = `Total: ${total} | Active: ${active} | Completed: ${completed}`;
+
   if (filtered.length === 0) {
     listEl.innerHTML = `<div class="empty">No tasks found</div>`;
   }
 }
 
-// --------------------
-// Edit Function
-// --------------------
+// Edit
 function startEdit(li, task) {
   const span = li.querySelector(".task-text");
 
@@ -133,25 +151,17 @@ function startEdit(li, task) {
     await fetch(`/api/todos/${task.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text: newText,
-        completed: task.completed
-      })
+      body: JSON.stringify({ text: newText })
     });
 
     loadTasks();
   }
 }
 
-// --------------------
-// Clear Completed
-// --------------------
+// clear completed
 clearCompletedBtn.addEventListener("click", async () => {
-  await fetch("/api/todos/clear_completed", {
-    method: "DELETE"
-  });
+  await fetch("/api/todos/clear_completed", { method: "DELETE" });
   loadTasks();
 });
 
-// Initial load
 loadTasks();
